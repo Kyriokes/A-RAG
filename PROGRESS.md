@@ -28,7 +28,8 @@ Revisión:
 ## Etapa 0: andamiaje y prueba de deploy
 
 - Hecho: `CLAUDE.md`, `Makefile` (con `ENV=prod` lee `.env.prod`), `uv.lock`, `.env.example`, `docker-compose.yml`, CI (`make lint`, `make test` con Postgres + pgvector, y el control de `retrieval_dev_latest.json`).
-- Falta (persona): la prueba de deploy en Render con Supabase, Workers AI y Groq; `docs/decisions.md` con límites confirmados; ver el CI en verde en GitHub.
+- Falta (persona): la prueba de deploy en Render con Supabase, Workers AI y Groq; `docs/decisions.md` con límites confirmados.
+- CI en GitHub: en verde para `4a5f14b`, en la rama de trabajo (corrida #2) y en `main` (corrida #3).
 - Aceptación, parte local (2026-11-16, `DATABASE_URL` de una base local de pruebas):
 
 ```
@@ -40,7 +41,7 @@ uv run ruff format --check .
 556 passed, 1 warning in 7.52s
 ```
 
-El paso de CI que compara con `main` lo saltea si esa rama no existe (hoy el repo solo tiene `ccr-f194c57c-onuwkn`): `evals.run --check-latest` sin línea base termina en 0.
+El paso de CI que compara con `main` no tiene línea base mientras `main` no tenga `evals/results/retrieval_dev_latest.json` (hasta que haya preguntas revisadas): `evals.run --check-latest` sin línea base termina en 0. La rama por defecto en GitHub sigue siendo `ccr-f194c57c-onuwkn`; se cambia a `main` en Settings → General → Default branch.
 
 Sin base de datos alcanzable (o con `ENV=prod`, o un `DATABASE_URL` remoto, que los tests de base se niegan a usar): `506 passed, 50 skipped`. Los tests ya no dependen del entorno (`tests/conftest.py`): con `EMBEDDING_PROVIDER=fake`, `ACTIVE_INDEX_VERSION` o `RETRIEVAL_K` en la terminal dan lo mismo.
 
