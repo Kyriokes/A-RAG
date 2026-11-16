@@ -1,0 +1,123 @@
+name: Scheduled
+# PLAN, Etapa 7. Every two days, a ping to the production API so the Supabase project does
+# not pause for inactivity (the ping wakes the backend, and /readyz queries the database).
+# Once a week, the fixed questions with generation against production, to catch a retired
+# model or a regression. A job whose repository secrets are missing skips its steps and
+# stays green. Step by step and the list of secrets: docs/deploy.md.
+on:
+  schedule:
+    - cron: "41 10 */2 * *" # ping: every other day, 10:41 UTC
+    - cron: "17 13 * * 1" # evals: Mondays, 13:17 UTC
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "Qué correr"
+        type: choice
+        options: [ping, evals, both]
+        default: both
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '41 10 */2 * *') ||
+      (github.event_name == 'workflow_dispatch' && inputs.job != 'evals')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      API_URL: ${{ secrets.API_URL }}
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          if [ -z "$API_URL" ]; then
+            echo "::notice::Falta el secreto API_URL: se omite el ping."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Ping /readyz
+        if: steps.secrets.outputs.ready == 'true'
+        # The free service sleeps after 15 minutes without traffic; waking it takes a while.
+        run: >-
+          curl --fail-with-body --silent --show-error --max-time 120
+          --retry 3 --retry-delay 30 --retry-all-errors "${API_URL%/}/readyz"
+
+  evals:
+    if: >-
+      (github.event_name == 'schedule' && github.event.schedule == '17 13 * * 1') ||
+      (github.event_name == 'workflow_dispatch' && inputs.job != 'ping')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ENV: prod
+      # Smoke over HTTP against the deployed API (eval runs identify themselves).
+      API_URL: ${{ secrets.API_URL }}
+      EVAL_KEY: ${{ secrets.EVAL_KEY }}
+      # 25 questions in process, with the production database, embeddings and LLM.
+      PROD_DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+      DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+      EMBEDDING_PROVIDER: openai_compat
+      EMBEDDING_PROVIDER_MODEL: "@cf/baai/bge-m3"
+      EMBEDDING_BASE_URL: ${{ secrets.EMBEDDING_BASE_URL }}
+      EMBEDDING_API_KEY: ${{ secrets.EMBEDDING_API_KEY }}
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+      LLM_FALLBACK_BASE_URL: ${{ secrets.LLM_FALLBACK_BASE_URL }}
+      LLM_FALLBACK_MODEL: "@cf/openai/gpt-oss-20b"
+      LLM_FALLBACK_API_KEY: ${{ secrets.LLM_FALLBACK_API_KEY }}
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          # have WHAT VAR...: true when every variable is set; a notice for each missing one.
+          have() {
+            local what=$1 status=0
+            shift
+            for name in "$@"; do
+              if [ -z "${!name}" ]; then
+                echo "::notice::Falta el secreto $name: se omite $what."
+                status=1
+              fi
+            done
+            return "$status"
+          }
+          smoke=true
+          evals=true
+          have "el smoke" API_URL EVAL_KEY || smoke=false
+          have "la corrida de 25 preguntas" PROD_DATABASE_URL EMBEDDING_BASE_URL \
+            EMBEDDING_API_KEY LLM_API_KEY || evals=false
+          echo "smoke=$smoke" >> "$GITHUB_OUTPUT"
+          echo "evals=$evals" >> "$GITHUB_OUTPUT"
+          if [ "$smoke" = true ] || [ "$evals" = true ]; then
+            echo "any=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.any == 'true'
+      - uses: astral-sh/setup-uv@v6
+        if: steps.secrets.outputs.any == 'true'
+        with:
+          python-version: "3.13"
+      - name: Install
+        if: steps.secrets.outputs.any == 'true'
+        run: uv sync --locked
+      - name: Smoke against the production API (10 questions)
+        if: steps.secrets.outputs.smoke == 'true'
+        run: uv run python -m evals.smoke --api "$API_URL"
+      - name: Corpus (the eval labels are checked against it)
+        if: steps.secrets.outputs.evals == 'true'
+        run: make corpus
+      - name: 25 dev questions with generation, production index and models
+        if: steps.secrets.outputs.evals == 'true'
+        run: >-
+          uv run python -m evals.run --mode full --split dev
+          --ids-file evals/pr_subset.txt --no-judge
+      - name: Keep the results
+        if: always() && steps.secrets.outputs.evals == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-evals
+          path: evals/results/
+          if-no-files-found: ignore
+          retention-days: 90

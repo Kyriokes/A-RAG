@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test fixture (one chapter): Aristotle, Nicomachean Ethics, Book 7, chapter 11
+     (Bekker 1152b1-24), trans. H. Rackham (Loeb, 1926). Excerpt copied verbatim from
+     PerseusDL/canonical-greekLit, data/tlg0086/tlg010/tlg0086.tlg010.perseus-eng2.xml,
+     commit dacb04909e43dc47738828d33cc3d2b0635bc54c, lines 1907-1908 and 2103-2126, with a
+     shortened teiHeader. Perseus Digital Library (https://www.perseus.tufts.edu/),
+     CC BY-SA 4.0. Listed in ATTRIBUTION.md. -->
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<teiHeader xml:lang="eng">
+<fileDesc>
+<titleStmt>
+<title>Nicomachean Ethics</title>
+<author>Aristotle</author>
+<editor role="translator">Harris Rackham</editor>
+</titleStmt>
+<publicationStmt>
+<publisher>Trustees of Tufts University</publisher>
+<pubPlace>Medford, MA</pubPlace>
+<authority>Perseus Digital Library Project</authority>
+<date type="release" when="1996" cert="high">Perseus 2.0</date>
+<idno type="filename">tlg0086.tlg010.perseus-eng2.xml</idno>
+<availability>
+<licence target="https://creativecommons.org/licenses/by-sa/4.0/">Available under a Creative Commons Attribution-ShareAlike (CC BY-SA) license.</licence>
+<p>Reuse must credit the Perseus Digital Library in a standard bibliographic format, including a link to <ref target="https://www.perseus.tufts.edu/">https://www.perseus.tufts.edu/</ref>. Each text reused should be individually identified and linked to its source GitHub repository whenever possible, either in its citation or in an accompanying source list. All corrections must be offered to the Perseus Digital Library.</p>
+</availability>
+</publicationStmt>
+<sourceDesc>
+<biblStruct>
+<monogr>
+<title>The Nicomachean Ethics</title>
+<author>Aristotle</author>
+<editor role="translator">Harris Rackham</editor>
+<imprint>
+<publisher>William Heinemann Ltd.</publisher>
+<pubPlace>London</pubPlace>
+<publisher>G. P. Putnam's Sons</publisher>
+<pubPlace>New York, NY</pubPlace>
+<date type="printing">1926</date>
+</imprint>
+</monogr>
+<series>
+<title>Loeb Classical Library</title>
+</series>
+<ref target="https://archive.org/details/athenianconstitu00arisuoft/page/198/mode/2up">Internet Archive</ref>
+</biblStruct>
+</sourceDesc>
+</fileDesc>
+</teiHeader>
+<text xml:lang="eng">
+<body xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2">
+<div n="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2" type="translation" xml:lang="eng">
+<div type="textpart" subtype="book" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2" n="7"> 
+<head rend="align(center)">Book 7</head>
+<div type="textpart" subtype="section" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2:7" n="11">
+<div type="textpart" subtype="subsection" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2:7.11" n="1"><p> <milestone n="1152b" resp="Bekker" unit="page"/><milestone n="1" resp="Bekker" unit="line"/>It is also the business of the political philosopher to examine the nature of Pleasure and Pain; for he is the master-craftsman, and lays down the end which is the standard whereby we pronounce things good or bad in the absolute sense. </p></div>  
+<div type="textpart" subtype="subsection" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2:7.11" n="2"> 
+    <p>Moreover this investigation is fundamental for our study, because we have established<note resp="Rackham">2.3.1.</note> that Moral Virtue and Vice are concerned with pleasures and pains, and most people hold that pleasure is a necessary adjunct of Happiness, which is why the word denoting <q rend="single">supreme bliss</q> is derived from the verb meaning <q rend="single">to enjoy.</q><note resp="Rackham"><foreign xml:lang="grc">μακάριος</foreign> from <foreign xml:lang="grc">μάλα χαίρειν</foreign>: cf. 5.4.9.</note></p></div>  
+<div type="textpart" subtype="subsection" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2:7.11" n="3"> 
+<p rend="align(indent)">Now (1) some people think that no pleasure is a good thing, whether essentially or accidentally. They argue that Good and Pleasure are two distinct things.</p>
+ <p rend="align(indent)">(2) Others hold that though some pleasures are good, most are bad.</p>
+ <p rend="align(indent)">(3) There is also a third view, that even if all pleasures are good, nevertheless pleasure cannot be the Supreme Good.<note resp="Rackham">Of these three views, the first is that of Speusippus, Plato’s successor as head of the Academy; the second is that of Plato’s <title>Philebus</title>; the third, which appears at the end of the <title>Philebus</title>, is that of Aristotle in Book 10 below.</note></p></div>  
+<div type="textpart" subtype="subsection" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2:7.11" n="4"> 
+<p rend="align(indent)">(1) To prove that pleasure is not a good at all, it is argued that
+<lb rend="align(indent)"/>(a) Every pleasure is a conscious process towards a natural state; but a process can in no case belong to the same order of things as its end; for example, the process of building cannot be a thing of the same sort as the house built.
+ <lb rend="align(indent)"/>(b) The temperate man avoids pleasures.
+  <lb rend="align(indent)"/>(c) The prudent man pursues freedom from pain, not pleasure.
+  <lb rend="align(indent)"/>(d) Pleasures are a hindrance to prudent deliberation, and the more so the more enjoyable they are; for instance, sexual pleasure: no one could think of anything while indulging in it.
+   <lb rend="align(indent)"/>(e) There is no art of pleasure; yet with every good thing there is an art which produces it. 
+  <lb rend="align(indent)"/>(f) Children  <milestone n="20" resp="Bekker" unit="line"/> and animals pursue pleasures. </p></div>  
+    
+<div type="textpart" subtype="subsection" xml:base="urn:cts:greekLit:tlg0086.tlg010.perseus-eng2:7.11" n="5"> 
+<p rend="align(indent)">(2) To prove that not all pleasures are good, it is argued that
+ <lb rend="align(indent)"/>(a) Some pleasures are disgraceful, and discredit the man who indulges in them.
+ <lb rend="align(indent)"/>(b) Some pleasures are harmful, for certain pleasant things cause disease.</p>
+ <p rend="align(indent)">(3) To prove that pleasure is not the Supreme Good, it is argued that it is not an end but a process.</p>
+  <p rend="align(indent)">These then, more or less, are the current views. </p></div></div>
+    
+</div>
+</div>
+</body>
+</text>
+</TEI>

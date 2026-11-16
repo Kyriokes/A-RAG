@@ -1,0 +1,151 @@
+# Catálogo de obras (PLAN, "Contratos de datos"). Una fila por obra.
+#
+# - aliases: títulos y abreviaturas en castellano, inglés y latín que usa la detección de
+#   obra en las preguntas. Las abreviaturas cortas ("EN", "EE", "Pol.") chocan con palabras
+#   comunes ("en"): la detección tiene que distinguir mayúsculas en las abreviaturas.
+# - bekker_start / bekker_end: a nivel de columna, derivados del texto griego de Perseus con
+#   `python -m app.corpus.work_ranges --write` (no se escriben a mano).
+# - authenticity: según el plan, sección "Obras dudosas y espurias". La fuente única que
+#   fija la autenticidad se declara en el README (pendiente de la persona).
+# - structure: book_chapter, chapter, book_bekker_page o book_problem. El adaptador lee los
+#   tipos de división de cada TEI y los mapea a estos niveles.
+works:
+  - work_id: eth-nic
+    abbr: EN
+    title_es: Ética a Nicómaco
+    title_en: Nicomachean Ethics
+    title_la: Ethica Nicomachea
+    aliases:
+      - Ética a Nicómaco
+      - Etica a Nicomaco
+      - Ética nicomáquea
+      - Ética Nicomaquea
+      - Moral a Nicómaco
+      - Moral a Nicomaco
+      - Nicomachean Ethics
+      - Ethics to Nicomachus
+      - Ethica Nicomachea
+      - EN
+      - NE
+      - Eth. Nic.
+      - EN.
+    bekker_start: 1094a
+    bekker_end: 1181b
+    authenticity: genuine
+    structure: book_chapter
+    perseus_id: tlg010
+
+  - work_id: eth-eud
+    abbr: EE
+    title_es: Ética Eudemia
+    title_en: Eudemian Ethics
+    title_la: Ethica Eudemia
+    aliases:
+      - Ética Eudemia
+      - Etica Eudemia
+      - Ética a Eudemo
+      - Etica a Eudemo
+      - Moral a Eudemo
+      - Eudemian Ethics
+      - Ethica Eudemia
+      - EE
+      - Eth. Eud.
+    bekker_start: 1214a
+    bekker_end: 1249b
+    authenticity: genuine
+    structure: book_chapter
+    perseus_id: tlg009
+
+  - work_id: pol
+    abbr: Pol.
+    title_es: Política
+    title_en: Politics
+    title_la: Politica
+    aliases:
+      - Política
+      - Politica
+      - La Política
+      - Politics
+      - Pol.
+    bekker_start: 1252a
+    bekker_end: 1342b
+    authenticity: genuine
+    # Ni el inglés ni el griego de Perseus traen capítulos: se cita por libro y página Bekker.
+    structure: book_bekker_page
+    perseus_id: tlg035
+
+  - work_id: metaph
+    abbr: Metaph.
+    title_es: Metafísica
+    title_en: Metaphysics
+    title_la: Metaphysica
+    aliases:
+      - Metafísica
+      - Metafisica
+      - Metaphysics
+      - Metaphysica
+      - Metaph.
+      - Met.
+    bekker_start: 980a
+    bekker_end: 1093b
+    authenticity: genuine
+    structure: book_chapter
+    perseus_id: tlg025
+
+  - work_id: rhet
+    abbr: Rh.
+    title_es: Retórica
+    title_en: Rhetoric
+    title_la: Rhetorica
+    aliases:
+      - Retórica
+      - Retorica
+      - Arte retórica
+      - Rhetoric
+      - Art of Rhetoric
+      - The "Art" of Rhetoric
+      - Rhetorica
+      - Ars Rhetorica
+      - Rh.
+      - Rhet.
+    bekker_start: 1354a
+    bekker_end: 1420a
+    authenticity: genuine
+    structure: book_chapter
+    perseus_id: tlg038
+
+  - work_id: poet
+    abbr: Poet.
+    title_es: Poética
+    title_en: Poetics
+    title_la: Poetica
+    aliases:
+      - Poética
+      - Poetica
+      - Arte poética
+      - Poetics
+      - De arte poetica
+      - Poet.
+    bekker_start: 1447a
+    bekker_end: 1462b
+    authenticity: genuine
+    structure: chapter
+    perseus_id: tlg034
+
+  - work_id: oec
+    abbr: Oec.
+    title_es: Económicos
+    title_en: Economics
+    title_la: Oeconomica
+    aliases:
+      - Económicos
+      - Economicos
+      - Económica
+      - Oeconomica
+      - Economics
+      - Oec.
+    bekker_start: 1343a
+    bekker_end: 1353b
+    authenticity: disputed
+    structure: book_chapter
+    perseus_id: tlg029

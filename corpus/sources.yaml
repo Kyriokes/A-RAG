@@ -1,0 +1,399 @@
+# Manifiesto de ediciones (PLAN, "Contratos de datos"). Una fila por edición.
+#
+# Regla 7 del plan: ningún texto entra al corpus sin una fila con traductor, licencia y
+# evidencia. `status`: indexed (entra al índice), reference (solo para derivar Bekker),
+# waiting (en espera, con motivo) o excluded (con motivo).
+#
+# - url y pinned_version: commit fijado de PerseusDL/canonical-greekLit (docs/decisions.md).
+# - sha256: lo escribe `make corpus` (app/corpus/fetch.py) en la primera descarga y después
+#   se exige; si no coincide, la descarga falla.
+# - pub_year: el año de la cabecera TEI (sourceDesc). Donde difiere del plan, se anota.
+# - translator_death_year: todos a confirmar (PLAN, "Qué está verificado y qué no").
+# - licence_evidence: citas literales de la cabecera TEI de cada archivo (idéntica en los
+#   14) y del README del repo en el commit fijado.
+
+x-perseus-evidence: &perseus_evidence >-
+  Cabecera TEI del archivo (publicationStmt/availability): <licence
+  target="https://creativecommons.org/licenses/by-sa/4.0/">Available under a Creative
+  Commons Attribution-ShareAlike (CC BY-SA) license.</licence> y "Reuse must credit the
+  Perseus Digital Library in a standard bibliographic format, including a link to
+  https://www.perseus.tufts.edu/. Each text reused should be individually identified and
+  linked to its source GitHub repository whenever possible, either in its citation or in an
+  accompanying source list. All corrections must be offered to the Perseus Digital
+  Library." README.md del repo en el commit fijado: "Unless otherwise indicated, all
+  contents of this repository are licensed under a Creative Commons Attribution-ShareAlike
+  4.0 International License. You must offer Perseus any modifications you make."
+
+editions:
+  # --- Nivel 0 (piloto): Ética a Nicómaco -------------------------------------------------
+  - edition_id: eth-nic.en.rackham
+    work_id: eth-nic
+    lang: en
+    translator: Harris Rackham
+    translator_death_year: 1944  # a confirmar
+    pub_year: 1926
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg010/tlg0086.tlg010.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: ffbd530e99b34ebab4332f98aa456aa930a671e6125db26e18d4d7c68bc3948f
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, The Nicomachean Ethics, trad. Harris Rackham, Loeb Classical Library
+      (Londres: William Heinemann; Nueva York: G. P. Putnam's Sons, 1926). Edición digital:
+      Perseus Digital Library, Tufts University (https://www.perseus.tufts.edu/), repositorio
+      PerseusDL/canonical-greekLit, archivo data/tlg0086/tlg010/tlg0086.tlg010.perseus-eng2.xml,
+      commit dacb049. Licencia CC BY-SA 4.0. Texto extraído del TEI y normalizado; los
+      cambios están en ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 0
+    has_bekker: true
+    status: indexed
+    status_reason: >-
+      Nivel 0 (piloto). Cumple la regla de admisión por las dos vías: licencia abierta
+      explícita de Perseus (CC BY-SA 4.0) y dominio público en EE. UU. (1926) con el
+      traductor muerto en 1944, hace más de 70 años (año de muerte a confirmar).
+
+  - edition_id: eth-nic.grc.bywater
+    work_id: eth-nic
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1894
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg010/tlg0086.tlg010.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 4c86c8f734876d2a19b0b58fa2aea08f002ce145c7c547d428b7662098a7bba8
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Aristotelis Ethica Nicomachea, ed. Ingram Bywater, Oxford Classical Texts
+      (Oxford: Clarendon Press, 1894). Edición digital: Perseus Digital Library, Tufts
+      University (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit,
+      archivo data/tlg0086/tlg010/tlg0086.tlg010.perseus-grc2.xml, commit dacb049. Licencia
+      CC BY-SA 4.0. Solo se usa para derivar la numeración Bekker; el texto no se publica.
+    adapter: perseus_tei
+    tier: 0
+    has_bekker: true
+    status: reference
+    status_reason: >-
+      Texto griego (Bywater), solo para calcular el rango Bekker de cada capítulo (marcas
+      cada 5 líneas). No se indexa ni se publica.
+
+  # --- Nivel 1: las otras seis obras de Perseus (se indexan en la Etapa 9) -----------------
+  - edition_id: eth-eud.en.rackham
+    work_id: eth-eud
+    lang: en
+    translator: Harris Rackham
+    translator_death_year: 1944  # a confirmar
+    pub_year: 1935
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg009/tlg0086.tlg009.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 9e98b239c23def2aef8d3b398049356ea4577bb856818bef79a626b6dd5609cd
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, The Athenian Constitution. The Eudemian Ethics. On Virtues and Vices,
+      trad. Harris Rackham, Loeb Classical Library (Londres: William Heinemann; Cambridge, MA:
+      Harvard University Press, 1935). Edición digital: Perseus Digital Library, Tufts
+      University (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit,
+      archivo data/tlg0086/tlg009/tlg0086.tlg009.perseus-eng2.xml, commit dacb049. Licencia
+      CC BY-SA 4.0. Texto extraído del TEI y normalizado; los cambios están en
+      ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se indexa en la Etapa 9. Entra solo por la licencia que declara Perseus: publicada en
+      1935, posterior a 1930, su dominio público en EE. UU. depende de que el copyright no se
+      haya renovado (decisión abierta 2 del plan). Trae solo los libros I, II, III, VII y
+      VIII.
+
+  - edition_id: eth-eud.grc.susemihl
+    work_id: eth-eud
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1884
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg009/tlg0086.tlg009.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 4fc07ad4775209f5381835e2636e587c83050d8513648b6d7bfaee9cbfbacae6
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Aristotelis Ethica Eudemia. Eudemi Rhodii Ethica, ed. Franz Susemihl
+      (Leipzig: Teubner, 1884). Edición digital: Perseus Digital Library, Tufts University
+      (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit, archivo
+      data/tlg0086/tlg009/tlg0086.tlg009.perseus-grc2.xml, commit dacb049. Licencia CC BY-SA
+      4.0. Solo se usa para derivar la numeración Bekker; el texto no se publica.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se usa en la Etapa 9, solo como referencia Bekker (texto griego, no se indexa ni se
+      publica).
+
+  - edition_id: pol.en.rackham
+    work_id: pol
+    lang: en
+    translator: Harris Rackham
+    translator_death_year: 1944  # a confirmar
+    pub_year: 1944  # la cabecera TEI fecha esta impresión en 1944; el plan da 1932 (1.ª ed.)
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg035/tlg0086.tlg035.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: c4546ed5e2ab75a1ab33f2c84a32cec53fa98a537dfc6714882e5859d638f92b
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Politics, trad. Harris Rackham, Loeb Classical Library (Londres: William
+      Heinemann; Cambridge, MA: Harvard University Press, 1944). Edición digital: Perseus
+      Digital Library, Tufts University (https://www.perseus.tufts.edu/), repositorio
+      PerseusDL/canonical-greekLit, archivo data/tlg0086/tlg035/tlg0086.tlg035.perseus-eng2.xml,
+      commit dacb049. Licencia CC BY-SA 4.0. Texto extraído del TEI y normalizado; los
+      cambios están en ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se indexa en la Etapa 9. Entra solo por la licencia que declara Perseus: la cabecera
+      TEI fecha la impresión en 1944 (el plan da 1932 como primera edición), posterior a
+      1930; su dominio público en EE. UU. depende de la no renovación del copyright
+      (decisión abierta 2 del plan). Sin capítulos: se cita por libro y página Bekker.
+
+  - edition_id: pol.grc.ross
+    work_id: pol
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1957
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg035/tlg0086.tlg035.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 2098a515dae41d04d2272dc999bf587ca3bb2f7b613f13664a5fa8827878a141
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Aristotelis Politica, ed. William David Ross, Oxford Classical Texts
+      (Oxford: Clarendon Press, 1957). Edición digital: Perseus Digital Library, Tufts
+      University (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit,
+      archivo data/tlg0086/tlg035/tlg0086.tlg035.perseus-grc2.xml, commit dacb049. Licencia
+      CC BY-SA 4.0. Solo se usa para derivar la numeración Bekker; el texto no se publica.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se usa en la Etapa 9, solo como referencia Bekker (texto griego, no se indexa ni se
+      publica).
+
+  - edition_id: metaph.en.tredennick
+    work_id: metaph
+    lang: en
+    translator: Hugh Tredennick
+    translator_death_year: 1981  # a confirmar
+    pub_year: 1933  # cabecera TEI: "1933-1935", dos volúmenes
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg025/tlg0086.tlg025.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 7dacbcd178f338ec5f15ddf8fd3e262cb31af7c27c9af2a0294019cd281d4721
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, The Metaphysics, trad. Hugh Tredennick, Loeb Classical Library, 2 vols.
+      (Londres: William Heinemann; Cambridge, MA: Harvard University Press, 1933-1935).
+      Edición digital: Perseus Digital Library, Tufts University
+      (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit, archivo
+      data/tlg0086/tlg025/tlg0086.tlg025.perseus-eng2.xml, commit dacb049. Licencia CC BY-SA
+      4.0. Texto extraído del TEI y normalizado; los cambios están en ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se indexa en la Etapa 9. Entra solo por la licencia que declara Perseus: no hay
+      constancia de su estado en EE. UU. (1933-1935) y Tredennick habría muerto en 1981
+      (decisión abierta 2 del plan).
+
+  - edition_id: metaph.grc.ross
+    work_id: metaph
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1924
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg025/tlg0086.tlg025.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 81df0f59585259ea5f5312b4e4540e7b64e659b04614e5c32187420b90ecd528
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Aristotle's Metaphysics, ed. William David Ross, 2 vols. (Oxford:
+      Clarendon Press, 1924). Edición digital: Perseus Digital Library, Tufts University
+      (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit, archivo
+      data/tlg0086/tlg025/tlg0086.tlg025.perseus-grc2.xml, commit dacb049. Licencia CC BY-SA
+      4.0. Solo se usa para derivar la numeración Bekker; el texto no se publica.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se usa en la Etapa 9, solo como referencia Bekker (texto griego, no se indexa ni se
+      publica).
+
+  - edition_id: rhet.en.freese
+    work_id: rhet
+    lang: en
+    translator: John Henry Freese
+    translator_death_year: 1930  # a confirmar
+    pub_year: 1926  # cabecera TEI: impresión 1926, reimpresión 1947
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg038/tlg0086.tlg038.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 9b376a0eb82ceab13d4783e446a729240ff7c0468dd1c8a43bb48d4c48896bfd
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, The "Art" of Rhetoric, trad. John Henry Freese, Loeb Classical Library
+      (Londres: William Heinemann; Cambridge, MA: Harvard University Press, 1926). Edición
+      digital: Perseus Digital Library, Tufts University (https://www.perseus.tufts.edu/),
+      repositorio PerseusDL/canonical-greekLit, archivo
+      data/tlg0086/tlg038/tlg0086.tlg038.perseus-eng2.xml, commit dacb049. Licencia CC BY-SA
+      4.0. Texto extraído del TEI y normalizado; los cambios están en ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se indexa en la Etapa 9. Cumple también la vía de dominio público: publicada en 1926 y
+      Freese murió en 1930 (a confirmar).
+
+  - edition_id: rhet.grc.ross
+    work_id: rhet
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1959
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg038/tlg0086.tlg038.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: fae178ee6be622231d89b0208d98c7d141397a21f504270bfa040fb24fb2ccfd
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Aristotelis Ars Rhetorica, ed. William David Ross, Oxford Classical Texts
+      (Oxford: Clarendon Press, 1959). Edición digital: Perseus Digital Library, Tufts
+      University (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit,
+      archivo data/tlg0086/tlg038/tlg0086.tlg038.perseus-grc2.xml, commit dacb049. Licencia
+      CC BY-SA 4.0. Solo se usa para derivar la numeración Bekker; el texto no se publica.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se usa en la Etapa 9, solo como referencia Bekker (texto griego, no se indexa ni se
+      publica).
+
+  - edition_id: poet.en.fyfe
+    work_id: poet
+    lang: en
+    translator: William Hamilton Fyfe
+    translator_death_year: 1965  # a confirmar
+    pub_year: 1939  # la cabecera TEI fecha esta impresión en 1939; el plan da 1927
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg034/tlg0086.tlg034.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 590fc532d04c8c054edce5b7f2bba4a15028710623fcd2fc459a38fdf23e933b
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, The Poetics (en Aristotle, The Poetics. "Longinus," On the Sublime.
+      Demetrius, On Style), trad. William Hamilton Fyfe, Loeb Classical Library (Londres:
+      William Heinemann; Cambridge, MA: Harvard University Press, 1939). Edición digital:
+      Perseus Digital Library, Tufts University (https://www.perseus.tufts.edu/),
+      repositorio PerseusDL/canonical-greekLit, archivo
+      data/tlg0086/tlg034/tlg0086.tlg034.perseus-eng2.xml, commit dacb049. Licencia CC BY-SA
+      4.0. Texto extraído del TEI y normalizado; los cambios están en ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se indexa en la Etapa 9. Entra solo por la licencia que declara Perseus: Fyfe murió en
+      1965 (a confirmar) y fuera de EE. UU. sigue protegida hasta 2036 (decisión abierta 2
+      del plan). La cabecera TEI fecha la impresión en 1939; el plan da 1927.
+
+  - edition_id: poet.grc.kassel
+    work_id: poet
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1965
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg034/tlg0086.tlg034.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 3bcb460e5ecb684a5929df7d5df3a1535a835520d930705366b7168f393196aa
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Aristotelis De arte poetica liber, ed. Rudolf Kassel (Oxford: Clarendon
+      Press, 1965). Edición digital: Perseus Digital Library, Tufts University
+      (https://www.perseus.tufts.edu/), repositorio PerseusDL/canonical-greekLit, archivo
+      data/tlg0086/tlg034/tlg0086.tlg034.perseus-grc2.xml, commit dacb049. Licencia CC BY-SA
+      4.0. Solo se usa para derivar la numeración Bekker; el texto no se publica.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se usa en la Etapa 9, solo como referencia Bekker (texto griego, no se indexa ni se
+      publica).
+
+  - edition_id: oec.en.armstrong
+    work_id: oec
+    lang: en
+    translator: George Cyril Armstrong
+    translator_death_year: null  # desconocido
+    pub_year: 1935
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg029/tlg0086.tlg029.perseus-eng2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 88df30e40d0b70a3ed9196f98162a91eebef4e6434de40d996fe624b31d959ca
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Oeconomica (en The Metaphysics; The Oeconomica and The Magna Moralia),
+      trad. George Cyril Armstrong, Loeb Classical Library (Londres: William Heinemann;
+      Cambridge, MA: Harvard University Press, 1935). Edición digital: Perseus Digital
+      Library, Tufts University (https://www.perseus.tufts.edu/), repositorio
+      PerseusDL/canonical-greekLit, archivo data/tlg0086/tlg029/tlg0086.tlg029.perseus-eng2.xml,
+      commit dacb049. Licencia CC BY-SA 4.0. Texto extraído del TEI y normalizado; los
+      cambios están en ATTRIBUTION.md.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se indexa en la Etapa 9. Entra solo por la licencia que declara Perseus: no hay
+      constancia de su estado en EE. UU. (1935) y el año de muerte de Armstrong es
+      desconocido (decisión abierta 2 del plan). Obra dudosa: solo libros I y II.
+
+  - edition_id: oec.grc.armstrong
+    work_id: oec
+    lang: grc
+    translator: null
+    translator_death_year: null
+    pub_year: 1935
+    url: https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/dacb04909e43dc47738828d33cc3d2b0635bc54c/data/tlg0086/tlg029/tlg0086.tlg029.perseus-grc2.xml
+    pinned_version: dacb04909e43dc47738828d33cc3d2b0635bc54c
+    sha256: 0d2e57bbc903d541f5d8360c36ca59d1cd5307fffe180aa4740135a271a204d1
+    licence: CC BY-SA 4.0
+    licence_evidence: *perseus_evidence
+    attribution: >-
+      Aristóteles, Oeconomica, texto griego de la edición Loeb de George Cyril Armstrong (en
+      The Metaphysics; The Oeconomica and The Magna Moralia; Londres: William Heinemann;
+      Cambridge, MA: Harvard University Press, 1935). Edición digital: Perseus Digital
+      Library, Tufts University (https://www.perseus.tufts.edu/), repositorio
+      PerseusDL/canonical-greekLit, archivo data/tlg0086/tlg029/tlg0086.tlg029.perseus-grc2.xml,
+      commit dacb049. Licencia CC BY-SA 4.0. Solo se usa para derivar la numeración Bekker;
+      el texto no se publica.
+    adapter: perseus_tei
+    tier: 1
+    has_bekker: true
+    status: waiting
+    status_reason: >-
+      Se usa en la Etapa 9, solo como referencia Bekker (texto griego, no se indexa ni se
+      publica). Trae las mismas marcas de línea que el inglés (45), no cada 5 líneas, así
+      que no afina los rangos de capítulo.

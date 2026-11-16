@@ -1,0 +1,15 @@
+# Fixtures de tests que se suben al repo. El plan permite un capítulo como máximo por
+# formato. app/corpus/attribution.py los lista en ATTRIBUTION.md.
+# Los fragmentos TEI sintéticos (texto inventado) viven dentro de tests/test_corpus_*.py.
+fixtures:
+  - path: tests/fixtures/perseus/ne_7_11_eng.xml
+    edition_id: eth-nic.en.rackham
+    content: >-
+      Ética a Nicómaco, libro VII, capítulo 11 (1152b1–24), trad. Harris Rackham (1926).
+      Copia literal del TEI de Perseus (commit dacb049) con la cabecera acortada.
+    licence: CC BY-SA 4.0
+  - path: tests/fixtures/perseus/ne_7_11_eng_nomarkers.xml
+    edition_id: eth-nic.en.rackham
+    content: >-
+      El mismo capítulo sin sus marcas Bekker (se quitaron los elementos milestone).
+    licence: CC BY-SA 4.0

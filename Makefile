@@ -1,8 +1,12 @@
 # Comandos estables del proyecto. Los que todavía no existen fallan con
-# "se implementa en la Etapa N". Con ENV=prod apuntan a producción.
+# "se implementa en la Etapa N". Con ENV=prod apuntan a producción: app/settings.py lee
+# .env.prod encima de .env. ARGS pasa opciones extra a eval-fast y eval, por ejemplo
+# ARGS="--no-judge" o ARGS="--ids-file evals/pr_subset.txt", y a smoke ARGS="--api <url>"
+# o ARGS="--file <jsonl>".
 SHELL := /bin/bash
 ENV ?= local
 SPLIT ?= dev
+ARGS ?=
 PY := uv run python
 export ENV
 
@@ -43,13 +47,13 @@ lint:
 	uv run ruff format --check .
 
 smoke:
-	$(PY) -m evals.smoke
+	$(PY) -m evals.smoke $(ARGS)
 
 eval-fast:
-	$(PY) -m evals.run --mode retrieval --split $(SPLIT)
+	$(PY) -m evals.run --mode retrieval --split $(SPLIT) $(ARGS)
 
 eval:
-	$(PY) -m evals.run --mode full --split $(SPLIT) $(if $(CONFIRM_TEST),--confirm-test,)
+	$(PY) -m evals.run --mode full --split $(SPLIT) $(if $(CONFIRM_TEST),--confirm-test,) $(ARGS)
 
 examples:
 	@echo "se implementa en la Etapa 8" && exit 1

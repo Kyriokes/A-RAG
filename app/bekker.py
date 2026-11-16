@@ -21,8 +21,12 @@ _REF_RE = re.compile(r"^\s*(\d{1,4})\s*([ab])\s*(\d{1,2})?\s*$", re.IGNORECASE)
 
 # Bekker refs written inside free text, e.g. "¿qué dice en 1097b22?" or "1097b22-1098a20".
 # Pages 1-1462; we require 3-4 digits to avoid matching ordinary numbers like "5a".
+# Not a column letter: a Spanish era marker after a year ("1150 a.C.", "384 a. C.",
+# "a. de C.", "a. de J. C.", "a. n. e."), or "a" between two years ("de 1100 a 1200": a
+# line has at most two digits).
+_NOT_A_COLUMN = r"(?!\.?\s*(?:(?:de\s+)?(?:J\.?\s*)?C|n\.?\s*e)(?:\.|\b))(?!\s*\d{3})"
 _REF_IN_TEXT_RE = re.compile(
-    r"(?<![\w.])(\d{3,4})\s?([ab])\s?(\d{1,2})?"
+    r"(?<![\w.])(\d{3,4})\s?([ab])" + _NOT_A_COLUMN + r"\s?(\d{1,2})?"
     r"(?:\s*[-–—]\s*(?:(\d{3,4})\s?([ab]))?\s?(\d{1,2})?)?(?![\w])",
     re.IGNORECASE,
 )

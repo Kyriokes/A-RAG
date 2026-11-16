@@ -1,0 +1,67 @@
+# Render Blueprint for the backend (PLAN, Etapa 7): one free web service.
+# The database is Supabase and embeddings and the LLM are external services, so the
+# service loads no model (512 MB of RAM is enough). Step by step: docs/deploy.md.
+# The app refuses to start (and the deploy fails) on fake models or on an index whose
+# embedding model or dimension differs from the configuration; /healthz then never answers.
+#
+# Variables with `sync: false` are secrets or values of each account: Render asks for them
+# when the Blueprint is created, and they never live in the repo. Every other parameter
+# keeps the default of app/settings.py (limits, budget, k, models of the plan).
+services:
+  - type: web
+    name: a-rag-api
+    runtime: python
+    plan: free
+    healthCheckPath: /healthz
+    buildCommand: pip install uv==0.11.32 && uv sync --locked --no-dev
+    # One worker: the per-minute limit lives in the process memory (app/limits.py).
+    # --proxy-headers trusts the proxies in FORWARDED_ALLOW_IPS, the same variable that
+    # app/limits.py reads. No access log: /ask and /search already write one JSON line per
+    # query, without the client address.
+    startCommand: >-
+      .venv/bin/uvicorn app.api:app --host 0.0.0.0 --port $PORT --workers 1
+      --proxy-headers --no-access-log
+    envVars:
+      # uv uses Render's Python instead of downloading its own, which would be installed
+      # outside the project directory that Render keeps after the build (a confirmar).
+      - key: PYTHON_VERSION
+        value: "3.13.4"
+      - key: UV_PYTHON_DOWNLOADS
+        value: never
+      - key: ENV
+        value: prod
+      # Render's proxy reaches the service from a private address (a confirmar: see
+      # "Verificar la IP del cliente" in docs/deploy.md).
+      - key: FORWARDED_ALLOW_IPS
+        value: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+      # Supabase, session pooler connection string (IPv4).
+      - key: DATABASE_URL
+        sync: false
+      # Embeddings: Cloudflare Workers AI, bge-m3 (the same model the index was built with).
+      - key: EMBEDDING_PROVIDER
+        value: openai_compat
+      - key: EMBEDDING_PROVIDER_MODEL
+        value: "@cf/baai/bge-m3"
+      - key: EMBEDDING_BASE_URL
+        sync: false
+      - key: EMBEDDING_API_KEY
+        sync: false
+      # LLM: Groq (LLM_BASE_URL and LLM_MODEL keep their defaults), Workers AI as fallback.
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_FALLBACK_BASE_URL
+        sync: false
+      - key: LLM_FALLBACK_MODEL
+        value: "@cf/openai/gpt-oss-20b"
+      - key: LLM_FALLBACK_API_KEY
+        sync: false
+      # Header X-Eval-Key of the eval runs: Render generates it; copy it to GitHub.
+      - key: EVAL_KEY
+        generateValue: true
+      # Key of the HMAC that identifies clients in the per-day counters and the logs, so
+      # neither can be mapped back to an address. Render generates it; it never leaves Render.
+      - key: CLIENT_KEY_SECRET
+        generateValue: true
+      # JSON list with the front's origin, e.g. ["https://a-rag.vercel.app"].
+      - key: CORS_ORIGINS
+        sync: false

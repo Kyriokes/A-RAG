@@ -34,6 +34,33 @@ def test_find_refs_in_text():
     assert bekker.find_refs("en 2026 hubo 15 libros") == []
 
 
+@pytest.mark.parametrize(
+    "text",
+    [
+        "¿Qué pasó en el año 1150 a.C. en Grecia?",
+        "Aristóteles nació en 384 a. C.",
+        "hacia 1300 a. de C.",
+        "en 1000 a. de J. C. no había filósofos",
+        "en 1120 a.C",
+        "en 1100 a. n. e.",
+        "de 1100 a 1200",
+    ],
+)
+def test_find_refs_skips_years(text):
+    assert bekker.find_refs(text) == []
+
+
+def test_find_refs_keeps_references_next_to_similar_text():
+    assert bekker.find_refs("1106 b 36") == [(221_336, 221_336)]
+    assert bekker.find_refs("en 1106a, como dice") == [
+        (bekker.column_start(1106, "a"), bekker.column_end(1106, "a"))
+    ]
+    assert bekker.find_refs("en 1094a1-3 y 1106b36–40") == [
+        (bekker.encode(1094, "a", 1), bekker.encode(1094, "a", 3)),
+        (221_336, 221_340),
+    ]
+
+
 def test_overlap():
     assert bekker.overlap((10, 20), (15, 30)) == 6
     assert bekker.overlap((10, 20), (21, 30)) == 0

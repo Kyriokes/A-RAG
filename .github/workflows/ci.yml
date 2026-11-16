@@ -1,4 +1,8 @@
 name: CI
+# Every push: lint, tests (the db-marked ones against the Postgres service below) and the
+# check that evals/results/retrieval_dev_latest.json matches this commit's configuration
+# and that its recall did not drop against main (PLAN, "Qué corre y cuándo"). No models,
+# no secrets, no corpus.
 on:
   push:
   pull_request:
@@ -7,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       db:
-        image: pgvector/pgvector:pg16
+        image: pgvector/pgvector:0.8.1-pg16 # same image as docker-compose.yml
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -16,8 +20,10 @@ jobs:
         options: >-
           --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/arag
-      EMBEDDING_PROVIDER: fake
+      # The db-marked tests use this database (tests/conftest.py); nothing else needs one.
+      # No EMBEDDING_PROVIDER here: the tests pin their own settings, and --check-latest's
+      # config hash does not depend on the provider.
+      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/arag
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -26,3 +32,9 @@ jobs:
       - run: uv sync --locked
       - run: make lint
       - run: make test
+      - name: Retrieval summary matches this commit and recall did not drop against main
+        run: |
+          git fetch --depth=1 origin main 2>/dev/null \
+            && git show FETCH_HEAD:evals/results/retrieval_dev_latest.json > /tmp/main.json \
+            || rm -f /tmp/main.json
+          uv run python -m evals.run --check-latest --baseline-file /tmp/main.json

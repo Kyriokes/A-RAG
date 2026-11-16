@@ -1,0 +1,10 @@
+{"id": "smoke-01", "question": "¿Cómo define Aristóteles la virtud moral y qué papel tiene en esa definición el término medio?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-df-01 (definition)"}
+{"id": "smoke-02", "question": "¿Qué es la eudaimonía para Aristóteles?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-df-02 (definition)"}
+{"id": "smoke-03", "question": "¿Qué formas de vida distingue Aristóteles al examinar dónde pone la gente la felicidad?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-lk-03 (lookup)"}
+{"id": "smoke-04", "question": "¿Qué ejemplo con una piedra usa Aristóteles para mostrar que las virtudes del carácter no nos vienen por naturaleza?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-lk-05 (lookup)"}
+{"id": "smoke-05", "question": "¿Por qué Aristóteles pone a Pericles como modelo de phronesis?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-lk-12 (lookup)"}
+{"id": "smoke-06", "question": "¿Qué dice la Ética a Nicómaco en 1094a1-3?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-bk-01 (bekker_ref)"}
+{"id": "smoke-07", "question": "What kind of activity does Aristotle think we can ascribe to the gods, and why not the moral virtues?", "question_lang": "en", "expected_behavior": "answer", "note": "de dev: v0-lk-18 (lookup)"}
+{"id": "smoke-08", "question": "¿Por qué a los viejos y a la gente de mal carácter les cuesta hacer amigos?", "question_lang": "es", "expected_behavior": "answer", "note": "de dev: v0-lk-16 (lookup)"}
+{"id": "smoke-09", "question": "¿Cómo se calcula la derivada de una función exponencial?", "question_lang": "es", "expected_behavior": "abstain", "note": "de dev: v0-un-01 (unanswerable)"}
+{"id": "smoke-10", "question": "¿Quién ganó el Mundial de fútbol de 1986?", "question_lang": "es", "expected_behavior": "abstain", "note": "de dev: v0-un-03 (unanswerable)"}

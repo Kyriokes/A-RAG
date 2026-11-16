@@ -1,0 +1,23 @@
+# Estructura esperada por obra: libros y cantidad de unidades (capítulos) por libro.
+#
+# Se escribe a partir de una fuente independiente de la salida del adaptador y la persona
+# la confirma (PLAN, Etapa 1). Si el adaptador no coincide, se investiga el TEI; este
+# archivo no se corrige para que coincida con la salida.
+works:
+  eth-nic:
+    source: >-
+      Plan Aristóteles RAG.md, Etapa 1: "10 libros con 13, 9, 12, 9, 11, 13, 14, 14, 12 y 9
+      capítulos (a confirmar)".
+    confirmed_by: null  # la persona lo confirma contra una edición impresa
+    levels: [book, chapter]
+    books:
+      "1": 13
+      "2": 9
+      "3": 12
+      "4": 9
+      "5": 11
+      "6": 13
+      "7": 14
+      "8": 14
+      "9": 12
+      "10": 9

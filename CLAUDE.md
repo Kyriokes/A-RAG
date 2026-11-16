@@ -25,6 +25,8 @@ Leer este archivo, `PROGRESS.md`, la etapa en curso del plan y las secciones que
 | `make eval-fast` | Métricas de retrieval sobre `dev` (sin LLM) |
 | `make eval` | Set completo con generación y juez (`SPLIT=test CONFIRM_TEST=1` para `test`) |
 
+`ARGS` pasa opciones a `eval-fast` y `eval`: `ARGS="--ids-file evals/pr_subset.txt"` (las 25 preguntas fijas de los PR), `ARGS="--no-judge"`, o `ARGS="--include-unreviewed"` para probar el código con casos sin revisar (solo `dev`; la corrida queda marcada, no reemplaza `retrieval_dev_latest.json`, no se sube y la calibración, `evals.compare` y `evals.report --write` la rechazan). A `smoke` le pasa `ARGS="--api <url>"` (contra un backend levantado) o `ARGS="--file <jsonl>"`. Con `ENV=prod`, `app/settings.py` lee `.env.prod` encima de `.env`.
+
 ## Estructura
 
 - `app/bekker.py` y `app/models.py`: contratos compartidos. Cambiarlos es cambiar el contrato.
