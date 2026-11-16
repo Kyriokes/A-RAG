@@ -17,7 +17,7 @@ Fuera de alcance en esta versión: texto griego como corpus, comentaristas y bib
 - Las citas se arman por código. El modelo solo señala qué fragmentos usó.
 - El deploy se prueba en la Etapa 0 y el backend de producción no carga modelos: los embeddings van por un servicio externo.
 - Se elimina Chroma: Postgres con pgvector en todos los entornos. Salen del stack Railway y OpenRouter.
-- La regla de "mismos pesos" del LLM se cambia por un ID fijado y cifras medidas con el modelo de producción.
+- Se mantiene la idea de un LLM gratuito de pesos abiertos, el mismo en local y por API, y ahora tiene nombre: `gpt-oss-20b`. Se agrega que las cifras publicadas son las medidas por API.
 - Cada etapa termina con un criterio comprobable, casi siempre un comando. Las revisiones a mano que quedan están nombradas y tienen responsable.
 - La etapa de iteración ya no exige una mejora: exige experimentos medidos, y tiene tope.
 - El MCP deja de ser parte del deploy y pasa a una etapa opcional.
@@ -38,7 +38,7 @@ Los datos no verificados que condicionan una decisión llevan la marca "a confir
 2. Las citas se arman por código desde los metadatos del fragmento. Una respuesta sin citas válidas se reemplaza por el mensaje de abstención.
 3. No inventar datos: si la respuesta no está en el corpus, el sistema dice que no la encuentra.
 4. Mismo modelo de embeddings en todos los entornos. El índice guarda el nombre del modelo, el proveedor, la dimensión y la normalización, y el backend no arranca si el modelo o la dimensión no coinciden con su configuración.
-5. El LLM se fija por ID y se configura por variables de entorno. Las cifras que se publican son siempre las medidas con el modelo de producción, no con Ollama.
+5. El LLM es un modelo gratuito de pesos abiertos, el mismo en local (Ollama) y por API (plan gratuito del proveedor). Se fija por ID y se cambia de entorno solo con variables. Las cifras que se publican son las medidas por API, porque la cuantización que sirve cada lado puede diferir.
 6. Misma base y mismo SQL en local y en producción. Configuración por variables de entorno, sin cambios de código.
 7. Ningún texto entra al corpus sin una fila en el manifiesto con traductor, licencia y evidencia. Gratis para leer no es lo mismo que libre.
 8. Python para backend y evals. Next.js + TypeScript solo para el front.
